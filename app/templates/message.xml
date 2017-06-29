@@ -1,0 +1,43 @@
+<xml>
+<ToUserName><![CDATA[{{ res.fromUserName }}]]></ToUserName>
+<FromUserName><![CDATA[{{ res['toUserName'] }}]]></FromUserName>
+<CreateTime>{{ res['timeStamp'] }}</CreateTime>
+<MsgType><![CDATA[{{ res['msgType'] }}]]></MsgType>
+{% if res['msgType'] == 'text' -%}
+<Content><![CDATA[{{ res['content'] }}]]></Content>
+{% elif res.msgType == 'image' -%}
+<Image>
+<MediaId><![CDATA[{{ res.mediaId }}]]></MediaId>
+</Image>
+{% elif res.msgType == 'voice' -%}
+<Voice>
+<MediaId><![CDATA[{{ res.mediaId }}]]></MediaId>
+</Voice>
+{% elif res.msgType == 'video' -%}
+<Video>
+<MediaId><![CDATA[{{ res.mediaId }}]]></MediaId>
+<Title><![CDATA[{{ res.title }}]]></Title>
+<Description><![CDATA[{{ res.description }}]]></Description>
+</Video>
+{% elif res.msgType == 'music' -%}
+<Music>
+<Title><![CDATA[{{ res.title}}]]></Title>
+<Description><![CDATA[{{ res.description }}]]></Description>
+<MusicUrl><![CDATA[{{ res.musicUrl }}]]></MusicUrl>
+<HQMusicUrl><![CDATA[{{ res.hqMusicUrl }}]]></HQMusicUrl>
+<ThumbMediaId><![CDATA[{{ res.thumbMediaId }}]]></ThumbMediaId>
+</Music>
+{% elif res.msgType == 'news' -%}
+<ArticleCount>{{ res.length}}</ArticleCount>
+<Articles>
+{% for item in res.content -%}
+<item>
+<Title><![CDATA[{{ item.title }}]]></Title>
+<Description><![CDATA[{{ item.description }}]]></Description>
+<PicUrl><![CDATA[{{ item.picUrl }}]]></PicUrl>
+<Url><![CDATA[{{ item.url }}]]></Url>
+</item>
+{% endfor -%}
+</Articles>
+{% endif -%}
+</xml>
